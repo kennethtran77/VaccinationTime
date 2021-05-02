@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 
-import Info from './Info';
+import Info from './components/Info';
 
 import './App.css';
 

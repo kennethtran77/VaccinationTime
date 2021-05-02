@@ -5,7 +5,7 @@ import { InfoWindow } from '@react-google-maps/api';
 import AddReview from './AddReview';
 import ListReviews from './ListReviews';
 
-import { formatMin } from './static';
+import { formatMin } from '../static';
 
 // A wrapper component around InfoWindow component
 function Info(props) {
@@ -45,6 +45,7 @@ function Info(props) {
                 <h3>Longest Wait Time: { formatMin(waitTimeInfo.max) }</h3>
                 <div className="flex">
                     <AddReview clinic={props.selectedClinic} />
+                    <div className='margin-right'></div>
                     <ListReviews clinic={props.selectedClinic} />
                 </div>
             </div>

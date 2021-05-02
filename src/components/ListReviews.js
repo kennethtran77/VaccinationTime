@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 
-import { formatMin } from './static';
+import { formatMin } from '../static';
 
 function ListReviews(props) {
     const [reviews, setReviews] = useState([]);
@@ -10,9 +10,14 @@ function ListReviews(props) {
         fetch('/review?' + new URLSearchParams({
             address: props.clinic.properties.address
         }))
-        .then(res => res.json())
-        .then(data => setReviews(data))
-        .catch(err => console(err));
+        .then(res => res.text())
+        .then(text => {
+          try {
+              const data = JSON.parse(text);
+              setReviews(data)
+          } catch (err) { }
+        })
+        .catch(err => console.log(err));
     }, [props.clinic.properties.address])
 
     return(
@@ -27,6 +32,7 @@ function ListReviews(props) {
                 <h1>Reviews</h1>
                 <h3>{props.clinic.properties.locationName}</h3>
             </div>
+            <hr/>
             <div className="content">
               <table>
                   <tbody>
@@ -38,15 +44,16 @@ function ListReviews(props) {
                     {
                     reviews.map((review, key) => (
                         <tr key={key}>
-                            <th>{ key }</th>
-                            <th>{ formatMin(parseInt(review["WaitTime"])) }</th>
-                            <th className="span-width">{ review["Comments"] }</th>
+                            <td>{ key }</td>
+                            <td>{ formatMin(parseInt(review["WaitTime"])) }</td>
+                            <td className="span-width">{ review["Comments"] }</td>
                         </tr>
                     ))
                     }
                   </tbody>
               </table>
             </div>
+            <div className="v-spacing"></div>
             <div className="actions">
               <button
                 className="button"
