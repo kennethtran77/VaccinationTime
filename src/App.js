@@ -9,6 +9,7 @@ import clinicsData from './data/covid-19-immunization-clinics.json';
 
 import { mapContainerStyle, libraries, center, options } from './static';
 
+// Return an array of all clinic addresses
 const initClinics = () => {
   let clinics = [];
 
@@ -89,6 +90,7 @@ function App() {
     .catch(err => console.log(err));
   };
 
+  // Return an array of markers for `clinics`
   const getMarkers = () => {
     let markers = []
 
