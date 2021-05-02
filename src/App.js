@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
-import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+
+import Info from './Info';
 
 import './App.css';
 
 import clinicsData from './data/covid-19-immunization-clinics.json';
 
-const libraries = ["places"];
-const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh'
-}
-const center = {
-  lat: 43.651890,
-  lng: -79.381706
-}
-const options = {
-  disableDefaultUI: true,
-  zoomControl: true
-}
+import { mapContainerStyle, libraries, center, options } from './static';
 
 function App() {
+  // Load Maps API
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
+    libraries
+  })
+
+  // Hooks for state
   const [searchValue, setSearchValue] = useState('');
   const [selectedClinic, setSelectedClinic] = useState(null);
 
@@ -29,16 +26,12 @@ function App() {
     mapRef.current = map;
   }, []);
 
-  // Load API
-  useLoadScript({
-    googleMapsKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
-    libraries
-  })
-
   // Pan to the given coordinates
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
   }, []);
+
+  if (!isLoaded || loadError) return '';
 
   // handle function for search bar
   const handleSearch = e => {
@@ -61,18 +54,8 @@ function App() {
     setSelectedClinic(null);
   };
 
-  const handleCreateReview = e => {
-    e.preventDefault();
-    // alert(selectedClinic.properties.locationName);
-  }
-
-  const handleListReviews = e => {
-    e.preventDefault();
-    alert(selectedClinic.properties.locationName);
-  }
-
   return (
-    <div>
+    <div id='app'>
       <div id='mainbar'>
         <h1 id="title">VaccinationTime</h1>
         <form id="search-form" onSubmit={handleSearch}>
@@ -105,29 +88,16 @@ function App() {
             )}
 
             { selectedClinic && selectedClinic.properties['locationName'] && (
-                <InfoWindow
-                    position={{
-                        lat: selectedClinic.geometry.coordinates[1],
-                        lng: selectedClinic.geometry.coordinates[0]
-                    }}
-                    onCloseClick={() => {
-                        setSelectedClinic(null);
-                    }} >
-                    <div>
-                        <h2>{selectedClinic.properties.locationName }</h2>
-                        <h3>{selectedClinic.properties.address}</h3>
-                        <p>{selectedClinic.properties.info}</p>
-                        <div className="flex">
-                            <button onClick={handleCreateReview} className='margin-right'>Create Review</button>
-                            <button onClick={handleListReviews} className='margin-right'>List Reviews</button>
-                        </div>
-                    </div>
-                </InfoWindow>
+                <Info
+                  position={{
+                    lat: selectedClinic.geometry.coordinates[1],
+                    lng: selectedClinic.geometry.coordinates[0]
+                  }}
+                  resetClinic={() => setSelectedClinic(null)}
+                  selectedClinic={selectedClinic}
+                />
             )}
         </GoogleMap>
-      </div>
-      <div id='content'>
-
       </div>
     </div>
   );
