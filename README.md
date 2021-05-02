@@ -2,6 +2,12 @@
 
 VaccinationTime allows you to share and view waiting times to get a vaccine at a vaccination clinic in Toronto.
 
+# Features
+
+* Create reviews sharing your waiting time to get vaccinated at a vaccination clinic
+* View waiting times and experiences of others
+* Filter out vaccination clincs whose waiting times are too long
+
 # Demo
 
 https://vimeo.com/544267300
