@@ -9,7 +9,7 @@ const sqlite3 = require('sqlite3').verbose();
 const PORT = 3001;
 
 const openDb = () => {
-    return new sqlite3.Database('./database.db', (err) => {
+    return new sqlite3.Database('./reviews.db', (err) => {
         if (err) {
             return console.error(err.message);
         }
