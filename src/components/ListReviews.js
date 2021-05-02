@@ -7,6 +7,7 @@ function ListReviews(props) {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
+        // Fetch the reviews data from the API when this ListReviews component is mounted
         fetch('/review?' + new URLSearchParams({
             address: props.clinic.properties.address
         }))
@@ -14,11 +15,15 @@ function ListReviews(props) {
         .then(text => {
           try {
               const data = JSON.parse(text);
-              setReviews(data)
+              setReviews(data);
+
+              // Used to force this component to rerender when the user leaves a new review
+              // eslint-disable-next-line
+              let update = props.update;
           } catch (err) { }
         })
         .catch(err => console.log(err));
-    }, [props.clinic.properties.address])
+    }, [props.update, props.clinic.properties.address])
 
     return(
         <Popup

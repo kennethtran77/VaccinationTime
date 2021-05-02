@@ -84,11 +84,10 @@ function AddReview(props) {
                     .then(res => res.text())
                     .then(res => {
                         alert(res);
+                        props.refreshWaitTimeInfo();
                         close();
                     })
-                    .catch((err) => {
-                        alert('Error occurred');
-                    })
+                    .catch((err) => console.log(err));
                 }}
               >
                   Post

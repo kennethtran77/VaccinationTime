@@ -50,17 +50,18 @@ function App() {
       }
     };
 
+    // Pan back to center
     panTo(center);
     setSelectedClinic(null);
   };
 
   return (
-    <div id='app'>
+    <div>
       <div id='mainbar'>
         <h1 id="title">VaccinationTime</h1>
         <form id="search-form" onSubmit={handleSearch}>
           <input
-            list="clinics" id="search-bar" name="search-bar" placeholder='Search vaccination locations'
+            list="clinics" id="search-bar" name="search-bar" placeholder='Search vaccination locations' autoComplete='off'
             value={searchValue} onChange={e => setSearchValue(e.target.value)}
           />
           <datalist id='clinics'>
@@ -76,7 +77,8 @@ function App() {
           center={center}
           options={options}
           onLoad={onMapLoad}>
-            {clinicsData.features.map((clinic) => (
+            { // Render markers
+            clinicsData.features.map((clinic) => (
                 <Marker
                     key={clinic.properties['_id']}
                     position={{
@@ -87,7 +89,8 @@ function App() {
                 />)
             )}
 
-            { selectedClinic && selectedClinic.properties['locationName'] && (
+            { // Render Info component for the currently selected clinic
+            selectedClinic && selectedClinic.properties['locationName'] && (
                 <Info
                   position={{
                     lat: selectedClinic.geometry.coordinates[1],
