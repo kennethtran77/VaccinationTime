@@ -75,6 +75,32 @@ app.get('/waittime', (req, res) => {
     db.close();
 });
 
+app.get('/filter', (req, res) => {
+    let criteria = req.query['criteria'].trim().toUpperCase();
+    let upperBound = req.query['bound'];
+
+    if (criteria !== 'MAX' && criteria !== 'MIN' && criteria !== 'AVG') {
+        res.status(400).send(`Criteria must be MAX, MIN, or AVG`);
+        return;
+    }
+
+    let sql =   `SELECT Address
+                FROM Reviews
+                GROUP BY Address
+                HAVING ${criteria}(WaitTime) <= ${upperBound}`;
+
+    let db = openDb();
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send();
+        } else {
+            res.send(rows);
+        }
+    });
+});
+
 // Start listening
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);

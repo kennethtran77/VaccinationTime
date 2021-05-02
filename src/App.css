@@ -2,16 +2,16 @@
   width: 100vw;
   height: 100px;
   background-color: #a6dcef;
-  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.4);
   display: flex;
   align-items: center;
   opacity: 50%;
   position: fixed;
   z-index: 3;
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.4);
   transition: 0.3s;
 }
 
-#mainbar:hover {
+#mainbar:hover, #filterbar:hover {
   opacity: 100%;
 }
 
@@ -19,7 +19,21 @@
   margin: 0px 30px 0px 30px;
 }
 
-#title {
+#filterbar {
+  width: 100vw;
+  position: fixed;
+  height: 30px;
+  padding-left: 10px;
+  top: 100px;
+  z-index: 2;
+  opacity: 50%;
+  background-color: #d4d4d4;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.4);
+}
+
+.title {
   display: none;
 }
 
@@ -30,10 +44,9 @@
 
 #search-form input {
   height: 30px;
-  width: 80%;
+  width: 70%;
   max-width: 600px;
   font-size: 18px;
-  font-family: 'Quicksand', 'serif';
   vertical-align: top;
 }
 
@@ -61,6 +74,10 @@
   width: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+input, textarea, select {
+  font-family: 'Quicksand', 'serif';
 }
 
 /*
@@ -109,19 +126,16 @@ tbody {
   resize: none;
   width: 100%;
   height: 100px;
-  font-family: 'Quicksand', 'serif';
   font-size: 16px;
 }
 
 .modal .content input[type='email'] {
   width: 100%;
-  font-family: 'Quicksand', 'serif';
   font-size: 16px;
   height: 30px;
 }
 
 .modal .content input[type='number'] {
-  font-family: 'Quicksand', 'serif';
   font-size: 16px;
   height: 30px;
 }
@@ -131,15 +145,14 @@ tbody {
 }
 
 .modal .actions .button {
-  font-family: 'Quicksand', 'serif';
   font-size: 16px;
   min-width: 60px;
   height: 30px;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 700px) {
   /* Desktop */
-  #title {
+  .title {
     display: block;
   }
 }

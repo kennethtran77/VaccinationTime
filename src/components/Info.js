@@ -47,13 +47,19 @@ function Info(props) {
                 <h2>{props.selectedClinic.properties.locationName }</h2>
                 <h3>{props.selectedClinic.properties.address}</h3>
                 <p>{props.selectedClinic.properties.info}</p>
-                <h3>Average Wait Time: { formatMin(waitTimeInfo.avg) }</h3>
                 <h3>Shortest Wait Time: { formatMin(waitTimeInfo.min) }</h3>
+                <h3>Average Wait Time: { formatMin(waitTimeInfo.avg) }</h3>
                 <h3>Longest Wait Time: { formatMin(waitTimeInfo.max) }</h3>
                 <div className="flex">
-                    <AddReview clinic={props.selectedClinic} refreshWaitTimeInfo={refreshWaitTimeInfo} />
+                    <AddReview
+                        clinic={props.selectedClinic}
+                        refreshWaitTimeInfo={refreshWaitTimeInfo}
+                    />
                     <div className='margin-right'></div>
-                    <ListReviews clinic={props.selectedClinic} update={update} /> {/* Force ListReviews to rerender */}
+                    <ListReviews
+                        clinic={props.selectedClinic}
+                        update={update} // Allow ListReviews to rerender when we add a new review
+                    />
                 </div>
             </div>
         </InfoWindow>
